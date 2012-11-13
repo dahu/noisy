@@ -28,7 +28,6 @@
 use strict;
 
 my $version = "0.2";
-my $player = '/usr/bin/aplay';
 my $sound_dir = '~/home/chat/sounds';
 my %noisy_sounds = ('highlight'      => "$sound_dir/private_message.wav",
                     'msg'            => "$sound_dir/channel_activity.wav",
@@ -49,6 +48,7 @@ my %noisy_sounds = ('highlight'      => "$sound_dir/private_message.wav",
 
 # default values in setup file (~/.weechat/plugins.conf)
 my %default_noisy = ('highlight'         => "on",
+                     'player'            => "/usr/bin/aplay",
                      'pv'                => "on",
                      'msg'               => "off",
                      'msg_off_channels'  => "",
@@ -61,6 +61,7 @@ my %default_noisy = ('highlight'         => "on",
 weechat::register("noisy", "bairui <barry.arthur\@gmail.com>", $version,
                   "GPL3", "Play a sound on channel activity/highlight/private message", "", "");
 weechat::config_set_plugin("noisy_highlight", $default_noisy{'highlight'}) if (weechat::config_get_plugin("noisy_highlight") eq "");
+weechat::config_set_plugin("noisy_player", $default_noisy{'player'}) if (weechat::config_get_plugin("noisy_player") eq "");
 weechat::config_set_plugin("noisy_pv", $default_noisy{'pv'}) if (weechat::config_get_plugin("noisy_pv") eq "");
 weechat::config_set_plugin("noisy_msg", $default_noisy{'msg'}) if (weechat::config_get_plugin("noisy_msg") eq "");
 weechat::config_set_plugin("noisy_msg_channels", $default_noisy{'msg_off_channels'}) if (weechat::config_get_plugin("noisy_msg_off_channels") eq "");
@@ -79,6 +80,7 @@ sub noisy {
   my $server = $_[1];
   my $message = $_[2]; # including #channel name
   my $noisy = weechat::config_get_plugin("noisy_$action");
+  my $player = weechat::config_get_plugin("noisy_player");
   #weechat::print("", $message);
   if ($message =~ weechat::config_get_plugin("noisy_msg_off_channels")) {
     # do nothing
@@ -95,3 +97,4 @@ sub noisy {
   }
   return weechat::WEECHAT_RC_OK;
 }
+
