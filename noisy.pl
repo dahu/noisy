@@ -44,18 +44,18 @@ my %default_noisy = ('highlight'         => "on",
 
 weechat::register("noisy", "bairui <barry.arthur\@gmail.com>", $version,
                   "GPL3", "Play a sound on channel activity/highlight/private message", "", "");
-weechat::config_set_plugin("noisy_highlight", $default_noisy{'highlight'}) if (weechat::config_get_plugin("noisy_highlight") eq "");
-weechat::config_set_plugin("noisy_player", $default_noisy{'player'}) if (weechat::config_get_plugin("noisy_player") eq "");
-weechat::config_set_plugin("noisy_sound_dir", $default_noisy{'sound_dir'}) if (weechat::config_get_plugin("noisy_sound_dir") eq "");
-weechat::config_set_plugin("noisy_pv", $default_noisy{'pv'}) if (weechat::config_get_plugin("noisy_pv") eq "");
-weechat::config_set_plugin("noisy_msg", $default_noisy{'msg'}) if (weechat::config_get_plugin("noisy_msg") eq "");
-weechat::config_set_plugin("noisy_msg_channels", $default_noisy{'msg_off_channels'}) if (weechat::config_get_plugin("noisy_msg_off_channels") eq "");
-weechat::config_set_plugin("noisy_msg_soft_channels", $default_noisy{'msg_soft_channels'}) if (weechat::config_get_plugin("noisy_msg_soft_channels") eq "");
-weechat::config_set_plugin("noisy_msg_loud_channels", $default_noisy{'msg_loud_channels'}) if (weechat::config_get_plugin("noisy_msg_loud_channels") eq "");
-weechat::config_set_plugin("noisy_msg_norm_channels", $default_noisy{'msg_norm_channels'}) if (weechat::config_get_plugin("noisy_msg_norm_channels") eq "");
-weechat::config_set_plugin("noisy_msg_priv_channels", $default_noisy{'msg_priv_channels'}) if (weechat::config_get_plugin("noisy_msg_priv_channels") eq "");
+weechat::config_set_plugin("highlight", $default_noisy{'highlight'}) if (weechat::config_get_plugin("highlight") eq "");
+weechat::config_set_plugin("player", $default_noisy{'player'}) if (weechat::config_get_plugin("player") eq "");
+weechat::config_set_plugin("sound_dir", $default_noisy{'sound_dir'}) if (weechat::config_get_plugin("sound_dir") eq "");
+weechat::config_set_plugin("pv", $default_noisy{'pv'}) if (weechat::config_get_plugin("pv") eq "");
+weechat::config_set_plugin("msg", $default_noisy{'msg'}) if (weechat::config_get_plugin("msg") eq "");
+weechat::config_set_plugin("msg_channels", $default_noisy{'msg_off_channels'}) if (weechat::config_get_plugin("msg_off_channels") eq "");
+weechat::config_set_plugin("msg_soft_channels", $default_noisy{'msg_soft_channels'}) if (weechat::config_get_plugin("msg_soft_channels") eq "");
+weechat::config_set_plugin("msg_loud_channels", $default_noisy{'msg_loud_channels'}) if (weechat::config_get_plugin("msg_loud_channels") eq "");
+weechat::config_set_plugin("msg_norm_channels", $default_noisy{'msg_norm_channels'}) if (weechat::config_get_plugin("msg_norm_channels") eq "");
+weechat::config_set_plugin("msg_priv_channels", $default_noisy{'msg_priv_channels'}) if (weechat::config_get_plugin("msg_priv_channels") eq "");
 
-my $sound_dir = weechat::config_get_plugin("noisy_sound_dir");
+my $sound_dir = weechat::config_get_plugin("sound_dir");
 my %noisy_sounds = ('highlight'      => "$sound_dir/private_message.wav",
                     'msg'            => "$sound_dir/channel_activity.wav",
                     'pv'             => "$sound_dir/private_message.wav",
@@ -82,20 +82,20 @@ sub noisy {
   my $action = $_[0];
   my $server = $_[1];
   my $message = $_[2]; # including #channel name
-  my $noisy = weechat::config_get_plugin("noisy_$action");
-  my $player = weechat::config_get_plugin("noisy_player");
+  my $noisy = weechat::config_get_plugin("$action");
+  my $player = weechat::config_get_plugin("player");
   #weechat::print("", $message);
-  if ($message =~ weechat::config_get_plugin("noisy_msg_off_channels")) {
+  if ($message =~ weechat::config_get_plugin("msg_off_channels")) {
     # do nothing
-  } elsif ($message =~ weechat::config_get_plugin("noisy_msg_soft_channels")) {
+  } elsif ($message =~ weechat::config_get_plugin("msg_soft_channels")) {
     system("$player $noisy_sounds{'soft_'.$action} 2>/dev/null &") if ($noisy eq "on");
-  } elsif ($message =~ weechat::config_get_plugin("noisy_msg_loud_channels")) {
+  } elsif ($message =~ weechat::config_get_plugin("msg_loud_channels")) {
     system("$player $noisy_sounds{'loud_'.$action} 2>/dev/null &") if ($noisy eq "on");
-  } elsif ($message =~ weechat::config_get_plugin("noisy_msg_norm_channels")) {
+  } elsif ($message =~ weechat::config_get_plugin("msg_norm_channels")) {
     system("$player $noisy_sounds{'norm_'.$action} 2>/dev/null &") if ($noisy eq "on");
-  } elsif ($message =~ weechat::config_get_plugin("noisy_msg_priv_channels")) {
+  } elsif ($message =~ weechat::config_get_plugin("msg_priv_channels")) {
     system("$player $noisy_sounds{'priv_'.$action} 2>/dev/null &") if ($noisy eq "on");
-  } elsif (($action =~ /(highlight|pv)/i) || ($message =~ weechat::config_get_plugin("noisy_msg_channels")) || ($noisy eq "on")) {
+  } elsif (($action =~ /(highlight|pv)/i) || ($message =~ weechat::config_get_plugin("msg_channels")) || ($noisy eq "on")) {
     system("$player $noisy_sounds{$action} 2>/dev/null &");
   }
   return weechat::WEECHAT_RC_OK;
