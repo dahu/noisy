@@ -78,6 +78,13 @@ weechat::hook_signal("irc_pv", "noisy", "pv");
 weechat::hook_signal("freenode,irc_in_privmsg", "noisy", "msg");
 weechat::hook_signal('weechat_pv', 'noisy', "highlight");
 
+sub play {
+  my $player = weechat::config_get_plugin("player");
+  my $kind = $_[0];
+  my $noisy = $_[1];
+  system("$player $noisy_sounds{$kind} 2>/dev/null &") if ($noisy eq "on");
+}
+
 sub noisy {
   my $action = $_[0];
   my $server = $_[1];
@@ -88,15 +95,15 @@ sub noisy {
   if ($message =~ weechat::config_get_plugin("msg_off_channels")) {
     # do nothing
   } elsif ($message =~ weechat::config_get_plugin("msg_soft_channels")) {
-    system("$player $noisy_sounds{'soft_'.$action} 2>/dev/null &") if ($noisy eq "on");
+    play('soft_'.$action, $noisy);
   } elsif ($message =~ weechat::config_get_plugin("msg_loud_channels")) {
-    system("$player $noisy_sounds{'loud_'.$action} 2>/dev/null &") if ($noisy eq "on");
+    play('loud_'.$action, $noisy);
   } elsif ($message =~ weechat::config_get_plugin("msg_norm_channels")) {
-    system("$player $noisy_sounds{'norm_'.$action} 2>/dev/null &") if ($noisy eq "on");
+    play('norm_'.$action, $noisy);
   } elsif ($message =~ weechat::config_get_plugin("msg_priv_channels")) {
-    system("$player $noisy_sounds{'priv_'.$action} 2>/dev/null &") if ($noisy eq "on");
+    play('priv_'.$action, $noisy);
   } elsif (($action =~ /(highlight|pv)/i) || ($message =~ weechat::config_get_plugin("msg_channels")) || ($noisy eq "on")) {
-    system("$player $noisy_sounds{$action} 2>/dev/null &");
+    play($action, $noisy);
   }
   return weechat::WEECHAT_RC_OK;
 }
