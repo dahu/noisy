@@ -49,7 +49,7 @@ weechat::config_set_plugin("player", $default_noisy{'player'}) if (weechat::conf
 weechat::config_set_plugin("sound_dir", $default_noisy{'sound_dir'}) if (weechat::config_get_plugin("sound_dir") eq "");
 weechat::config_set_plugin("pv", $default_noisy{'pv'}) if (weechat::config_get_plugin("pv") eq "");
 weechat::config_set_plugin("msg", $default_noisy{'msg'}) if (weechat::config_get_plugin("msg") eq "");
-weechat::config_set_plugin("msg_channels", $default_noisy{'msg_off_channels'}) if (weechat::config_get_plugin("msg_off_channels") eq "");
+weechat::config_set_plugin("msg_off_channels", $default_noisy{'msg_off_channels'}) if (weechat::config_get_plugin("msg_off_channels") eq "");
 weechat::config_set_plugin("msg_soft_channels", $default_noisy{'msg_soft_channels'}) if (weechat::config_get_plugin("msg_soft_channels") eq "");
 weechat::config_set_plugin("msg_loud_channels", $default_noisy{'msg_loud_channels'}) if (weechat::config_get_plugin("msg_loud_channels") eq "");
 weechat::config_set_plugin("msg_norm_channels", $default_noisy{'msg_norm_channels'}) if (weechat::config_get_plugin("msg_norm_channels") eq "");
