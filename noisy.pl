@@ -30,9 +30,9 @@ use strict;
 my $version = "0.2";
 
 # default values in setup file (~/.weechat/plugins.conf)
-my %default_noisy = ('highlight'         => "on",
-                     'player'            => "/usr/bin/aplay",
+my %default_noisy = ('player'            => "/usr/bin/aplay",
                      'sound_dir'         => "~/.weechat/sounds",
+                     'highlight'         => "on",
                      'pv'                => "on",
                      'msg'               => "off",
                      'msg_off_channels'  => "",
