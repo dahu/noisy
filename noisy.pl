@@ -56,25 +56,27 @@ weechat::config_set_plugin("msg_loud_channels", $default_noisy{'msg_loud_channel
 weechat::config_set_plugin("msg_norm_channels", $default_noisy{'msg_norm_channels'}) if (weechat::config_get_plugin("msg_norm_channels") eq "");
 weechat::config_set_plugin("msg_priv_channels", $default_noisy{'msg_priv_channels'}) if (weechat::config_get_plugin("msg_priv_channels") eq "");
 
-# TODO How about using either the name of the keys as file_name.wav or settings to specify them?
-# I think settings would be more flexible, but I'm not sure what do you think about adding 15 or more of them.
-my $sound_dir = weechat::config_get_plugin("sound_dir");
-my %noisy_sounds = ('highlight'      => "$sound_dir/private_message.wav",
-                    'msg'            => "$sound_dir/channel_activity.wav",
-                    'pv'             => "$sound_dir/private_message.wav",
-                    'soft_highlight' => "$sound_dir/sonar.wav",
-                    'soft_msg'       => "$sound_dir/drip.wav",
-                    'soft_pv'        => "$sound_dir/drum.wav",
-                    'loud_highlight' => "$sound_dir/sonar.wav",
-                    'loud_msg'       => "$sound_dir/sonar.wav",
-                    'loud_pv'        => "$sound_dir/drum.wav",
-                    'norm_highlight' => "$sound_dir/sonar.wav",
-                    'norm_msg'       => "$sound_dir/channel_activity.wav",
-                    'norm_pv'        => "$sound_dir/drum.wav",
-                    'priv_highlight' => "$sound_dir/sonar.wav",
-                    'priv_msg'       => "$sound_dir/private_message.wav",
-                    'priv_pv'        => "$sound_dir/drum.wav",
+# TODO Not sure if 'our' is the correct way to fix error from using those vars in the foreach loop.
+our $sound_dir = weechat::config_get_plugin("sound_dir");
+our %noisy_sounds = ('highlight'      => "",
+                    'msg'            => "",
+                    'pv'             => "",
+                    'soft_highlight' => "",
+                    'soft_msg'       => "",
+                    'soft_pv'        => "",
+                    'loud_highlight' => "",
+                    'loud_msg'       => "",
+                    'loud_pv'        => "",
+                    'norm_highlight' => "",
+                    'norm_msg'       => "",
+                    'norm_pv'        => "",
+                    'priv_highlight' => "",
+                    'priv_msg'       => "",
+                    'priv_pv'        => "",
                   );
+foreach my $key (keys %noisy_sounds) {
+  %noisy_sounds->{$key} = "$sound_dir/$key";
+}
 
 weechat::hook_signal("weechat_highlight", "noisy", "highlight");
 weechat::hook_signal("irc_pv", "noisy", "pv");
