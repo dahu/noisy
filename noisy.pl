@@ -75,7 +75,7 @@ our %noisy_sounds = ('highlight'      => "",
                     'priv_pv'        => "",
                   );
 foreach my $key (keys %noisy_sounds) {
-  %noisy_sounds->{$key} = "$sound_dir/$key";
+  $noisy_sounds{$key} = "$sound_dir/$key";
 }
 
 weechat::hook_signal("weechat_highlight", "noisy", "highlight");
