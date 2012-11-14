@@ -44,17 +44,10 @@ my %default_noisy = ('player'            => "/usr/bin/aplay",
 
 weechat::register("noisy", "bairui <barry.arthur\@gmail.com>", $version,
                   "GPL3", "Play a sound on channel activity/highlight/private message", "", "");
-# TODO Shouldn't a loop be used to handle the settings here?
-weechat::config_set_plugin("highlight", $default_noisy{'highlight'}) if (weechat::config_get_plugin("highlight") eq "");
-weechat::config_set_plugin("player", $default_noisy{'player'}) if (weechat::config_get_plugin("player") eq "");
-weechat::config_set_plugin("sound_dir", $default_noisy{'sound_dir'}) if (weechat::config_get_plugin("sound_dir") eq "");
-weechat::config_set_plugin("pv", $default_noisy{'pv'}) if (weechat::config_get_plugin("pv") eq "");
-weechat::config_set_plugin("msg", $default_noisy{'msg'}) if (weechat::config_get_plugin("msg") eq "");
-weechat::config_set_plugin("msg_off_channels", $default_noisy{'msg_off_channels'}) if (weechat::config_get_plugin("msg_off_channels") eq "");
-weechat::config_set_plugin("msg_soft_channels", $default_noisy{'msg_soft_channels'}) if (weechat::config_get_plugin("msg_soft_channels") eq "");
-weechat::config_set_plugin("msg_loud_channels", $default_noisy{'msg_loud_channels'}) if (weechat::config_get_plugin("msg_loud_channels") eq "");
-weechat::config_set_plugin("msg_norm_channels", $default_noisy{'msg_norm_channels'}) if (weechat::config_get_plugin("msg_norm_channels") eq "");
-weechat::config_set_plugin("msg_priv_channels", $default_noisy{'msg_priv_channels'}) if (weechat::config_get_plugin("msg_priv_channels") eq "");
+
+foreach my $key (keys %default_noisy) {
+  weechat::config_set_plugin($key, $default_noisy{$key}) if (weechat::config_get_plugin($key) eq "");
+}
 
 # TODO Not sure if 'our' is the correct way to fix error from using those vars in the foreach loop.
 our $sound_dir = weechat::config_get_plugin("sound_dir");
