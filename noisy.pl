@@ -44,6 +44,7 @@ my %default_noisy = ('player'            => "/usr/bin/aplay",
 
 weechat::register("noisy", "bairui <barry.arthur\@gmail.com>", $version,
                   "GPL3", "Play a sound on channel activity/highlight/private message", "", "");
+# TODO Shouldn't a loop be used to handle the settings here?
 weechat::config_set_plugin("highlight", $default_noisy{'highlight'}) if (weechat::config_get_plugin("highlight") eq "");
 weechat::config_set_plugin("player", $default_noisy{'player'}) if (weechat::config_get_plugin("player") eq "");
 weechat::config_set_plugin("sound_dir", $default_noisy{'sound_dir'}) if (weechat::config_get_plugin("sound_dir") eq "");
@@ -55,6 +56,8 @@ weechat::config_set_plugin("msg_loud_channels", $default_noisy{'msg_loud_channel
 weechat::config_set_plugin("msg_norm_channels", $default_noisy{'msg_norm_channels'}) if (weechat::config_get_plugin("msg_norm_channels") eq "");
 weechat::config_set_plugin("msg_priv_channels", $default_noisy{'msg_priv_channels'}) if (weechat::config_get_plugin("msg_priv_channels") eq "");
 
+# TODO How about using either the name of the keys as file_name.wav or settings to specify them?
+# I think settings would be more flexible, but I'm not sure what do you think about adding 15 or more of them.
 my $sound_dir = weechat::config_get_plugin("sound_dir");
 my %noisy_sounds = ('highlight'      => "$sound_dir/private_message.wav",
                     'msg'            => "$sound_dir/channel_activity.wav",
