@@ -59,21 +59,21 @@ weechat::config_set_plugin("msg_priv_channels", $default_noisy{'msg_priv_channel
 # TODO Not sure if 'our' is the correct way to fix error from using those vars in the foreach loop.
 our $sound_dir = weechat::config_get_plugin("sound_dir");
 our %noisy_sounds = ('highlight'      => "",
-                    'msg'            => "",
-                    'pv'             => "",
-                    'soft_highlight' => "",
-                    'soft_msg'       => "",
-                    'soft_pv'        => "",
-                    'loud_highlight' => "",
-                    'loud_msg'       => "",
-                    'loud_pv'        => "",
-                    'norm_highlight' => "",
-                    'norm_msg'       => "",
-                    'norm_pv'        => "",
-                    'priv_highlight' => "",
-                    'priv_msg'       => "",
-                    'priv_pv'        => "",
-                  );
+                     'msg'            => "",
+                     'pv'             => "",
+                     'soft_highlight' => "",
+                     'soft_msg'       => "",
+                     'soft_pv'        => "",
+                     'loud_highlight' => "",
+                     'loud_msg'       => "",
+                     'loud_pv'        => "",
+                     'norm_highlight' => "",
+                     'norm_msg'       => "",
+                     'norm_pv'        => "",
+                     'priv_highlight' => "",
+                     'priv_msg'       => "",
+                     'priv_pv'        => "",
+                     );
 foreach my $key (keys %noisy_sounds) {
   $noisy_sounds{$key} = "$sound_dir/$key";
 }
