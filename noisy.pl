@@ -80,9 +80,9 @@ weechat::hook_signal('weechat_pv', 'noisy', "highlight");
 
 sub play {
   my $player = weechat::config_get_plugin("player");
-  my $kind = $_[0];
+  my $key = $_[0];
   my $noisy = $_[1];
-  system("$player $noisy_sounds{$kind} 2>/dev/null &") if ($noisy eq "on");
+  system("$player $noisy_sounds{$key} 2>/dev/null &") if ($noisy eq "on");
 }
 
 sub noisy {
