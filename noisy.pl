@@ -49,27 +49,6 @@ foreach my $key (keys %default_noisy) {
   weechat::config_set_plugin($key, $default_noisy{$key}) if (weechat::config_get_plugin($key) eq "");
 }
 
-# TODO Not sure if 'our' is the correct way to fix error from using those vars in the foreach loop.
-our %noisy_sounds = ('highlight'      => "",
-                     'msg'            => "",
-                     'pv'             => "",
-                     'soft_highlight' => "",
-                     'soft_msg'       => "",
-                     'soft_pv'        => "",
-                     'loud_highlight' => "",
-                     'loud_msg'       => "",
-                     'loud_pv'        => "",
-                     'norm_highlight' => "",
-                     'norm_msg'       => "",
-                     'norm_pv'        => "",
-                     'priv_highlight' => "",
-                     'priv_msg'       => "",
-                     'priv_pv'        => "",
-                     );
-foreach my $key (keys %noisy_sounds) {
-  $noisy_sounds{$key} = $key;
-}
-
 weechat::hook_signal("weechat_highlight", "noisy", "highlight");
 weechat::hook_signal("irc_pv", "noisy", "pv");
 weechat::hook_signal("freenode,irc_in_privmsg", "noisy", "msg");
@@ -80,7 +59,7 @@ sub play {
   my $dir = weechat::config_get_plugin("sound_dir");
   my $key = $_[0];
   my $noisy = $_[1];
-  system("$player $dir/$noisy_sounds{$key} 2>/dev/null &") if ($noisy eq "on");
+  system("$player $dir/$key 2>/dev/null &") if ($noisy eq "on");
 }
 
 sub match {
