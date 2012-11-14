@@ -50,7 +50,6 @@ foreach my $key (keys %default_noisy) {
 }
 
 # TODO Not sure if 'our' is the correct way to fix error from using those vars in the foreach loop.
-our $sound_dir = weechat::config_get_plugin("sound_dir");
 our %noisy_sounds = ('highlight'      => "",
                      'msg'            => "",
                      'pv'             => "",
@@ -68,7 +67,7 @@ our %noisy_sounds = ('highlight'      => "",
                      'priv_pv'        => "",
                      );
 foreach my $key (keys %noisy_sounds) {
-  $noisy_sounds{$key} = "$sound_dir/$key";
+  $noisy_sounds{$key} = $key;
 }
 
 weechat::hook_signal("weechat_highlight", "noisy", "highlight");
@@ -78,9 +77,10 @@ weechat::hook_signal('weechat_pv', 'noisy', "highlight");
 
 sub play {
   my $player = weechat::config_get_plugin("player");
+  my $dir = weechat::config_get_plugin("sound_dir");
   my $key = $_[0];
   my $noisy = $_[1];
-  system("$player $noisy_sounds{$key} 2>/dev/null &") if ($noisy eq "on");
+  system("$player $dir/$noisy_sounds{$key} 2>/dev/null &") if ($noisy eq "on");
 }
 
 sub match {
