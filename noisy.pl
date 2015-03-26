@@ -72,7 +72,12 @@ sub noisy {
   my $message = $_[2]; # including #channel name
   my $noisy = weechat::config_get_plugin("$action");
   my $player = weechat::config_get_plugin("player");
-  #weechat::print("", $message);
+  my $option = weechat::config_get("plugins.var.perl.badnick.bad_nicks");
+  my @bad_nicks = split(/\s*,\s*/, weechat::config_string($option));
+  if( $message =~ /^:([^!]+)/ ) {
+    my $nick = $1;
+    return weechat::WEECHAT_RC_OK if grep {$_ eq $nick} @bad_nicks;
+  }
   if (match($message, "msg_off_channels")) {
     # do nothing
   } elsif (match($message, "msg_soft_channels")) {
