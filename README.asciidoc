@@ -1,0 +1,9 @@
+Noisy
+-----
+
+__Don't chat quietly__
+
+Noisy adds channel noises to weechat.
+
+Noisy will silently ignore anyone on the
+https://github.com/dahu/badnick[bad_nicks] list.
